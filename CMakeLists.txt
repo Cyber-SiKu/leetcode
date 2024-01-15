@@ -8,4 +8,6 @@ add_executable(leetcode main.cpp
         64.h
         63.h
         447.h
+        82.h
+        83.h
 )
