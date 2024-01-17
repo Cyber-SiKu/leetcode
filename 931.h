@@ -12,8 +12,9 @@
 class Solution {
 public:
     int minFallingPathSum(std::vector<std::vector<int>> &matrix) {
-        int n = matrix[0].size();
-        std::vector<std::vector<int>> dp(n, std::vector<int>{n, 0});
+        int n;
+        n = matrix.size();
+        std::vector<std::vector<int>> dp(n, std::vector<int>(n, 0));
         for (int i = 0; i < n; ++i) {
             dp[0][i] = matrix[0][i];
         }
