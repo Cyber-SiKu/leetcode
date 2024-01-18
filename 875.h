@@ -14,7 +14,7 @@ class Solution {
 public:
     int minEatingSpeed(std::vector<int> &piles, int h) {
         int max = *std::max_element(piles.begin(), piles.end()); // 最快速度 是可以的
-//        unsigned long long sum = std::accumulate(piles.begin(), piles.end(), 0);
+        unsigned long long sum = std::accumulate(piles.begin(), piles.end(), 0);
         int min = int(sum / (unsigned long long) h); // 最慢速度
         int ret = max;
 

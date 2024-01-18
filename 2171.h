@@ -7,32 +7,33 @@
 
 #include <vector>
 #include <iostream>
+#include <numeric>
+#include <algorithm>
 
 class Solution {
 public:
-    long long minimumRemoval(const std::vector<int> &beans) {
-        long long ret = 1e10;
-        // 定哪一个不拿
-        for (int i = 0; i < beans.size(); ++i) {
-            long long times = 0;
-            if (beans[i] * beans.size() > ret) {
+    long long minimumRemoval(std::vector<int> &beans) {
+        long long dp = std::accumulate(beans.begin(), beans.end(), (long long) 0);
+        std::sort(beans.begin(), beans.end());
+        dp -= (long long) (beans[0] * beans.size());
+        long long ret = dp;
+        for (int i = 1; i < beans.size(); ++i) {
+            if (beans[i] == beans[i-1]){
                 continue;
             }
-            for (int j = 0; j < beans.size(); ++j) {
-                if (i == j) {
-                    continue;
-                }
-                if (beans[j] < beans[i]) {
-                    times += beans[j];
-                } else if (beans[j] > beans[i]) {
-                    times += (beans[j] - beans[i]);
+            long long tmp = dp - (beans[i] - beans[i - 1]) * (beans.size() - i);
+            if (beans[i] != beans[i - 1]) {
+                for (int j = i-1; j >= 0; --j) {
+                    if (beans[j] == beans[i-1]) {
+                        tmp += beans[i - 1];
+                    } else {
+                        break;
+                    }
                 }
             }
-            if (ret > times) {
-                ret = times;
-            }
+            dp = tmp;
+            ret = std::min(ret, dp);
         }
-
         return ret;
     }
 
