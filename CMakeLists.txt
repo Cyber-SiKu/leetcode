@@ -15,4 +15,6 @@ add_executable(leetcode main.cpp
         931.h
         2744.h
         221.h
+        2171.h
+        875.h
 )
