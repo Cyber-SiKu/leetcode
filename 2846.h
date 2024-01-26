@@ -11,29 +11,27 @@
 #include <stack>
 #include <vector>
 
-static constexpr int MAX_EDGE = 27;
-
 class Solution {
 
-	std::vector<int> findRoad(int start, int end,
-	                          std::vector<std::vector<int>> edges) {
+	std::vector<std::vector<int>>
+	findRoad(int start, int end, std::vector<std::vector<int>> edges) {
 		std::stack<int> road;
-		std::stack<std::vector<int>> length;
+		std::stack<std::vector<std::vector<int>>> visited;
 		road.push(start);
-		length.push(std::vector<int>());
+		visited.push(std::vector<std::vector<int>>());
 		while (!road.empty()) {
 			auto top = road.top();
-			auto pre = length.top();
+			auto pre = visited.top();
 			if (top == end) {
 				break;
 			}
 			road.pop();
-			length.pop();
+			visited.pop();
 			for (auto i = edges.begin(); i != edges.end();) {
 				if ((*i)[0] == top || (*i)[1] == top) {
-					auto preLength(pre);
-					preLength.push_back((*i)[2]);
-					length.push(preLength);
+					auto preVisited(pre);
+					preVisited.push_back(*i);
+					visited.push(preVisited);
 					if ((*i)[0] == top) {
 						road.push((*i)[1]);
 					} else {
@@ -45,7 +43,7 @@ class Solution {
 				}
 			}
 		}
-		return length.top();
+		return visited.top();
 	}
 
 public:
@@ -58,7 +56,10 @@ public:
 			int result = 0;
 			auto road = findRoad(queries[i][0], queries[i][1], edges);
 			for (int j = 0; j + result < road.size(); ++j) {
-				int num = std::count(road.cbegin(), road.cend(), road[i]);
+				int num = std::count_if(road.cbegin(), road.cend(),
+				                        [&](std::vector<int> const& v) {
+					                        return v[2] == road[j][2];
+				                        });
 				result = std::max(num, result);
 			}
 			ret.push_back(road.size() - result);
