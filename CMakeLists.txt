@@ -25,4 +25,8 @@ add_executable(leetcode main.cpp
         5.h
         5.h
         139.h
+        2846.h
+        2846.h
+        Base.cpp
+        Base.h
 )
