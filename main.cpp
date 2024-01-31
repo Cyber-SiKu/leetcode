@@ -1,7 +1,7 @@
-#include "2846.h"
+#include "2670.h"
 
 int main() {
-    Solution s;
-    s.test();
-    return 0;
+	Solution s;
+	s.test();
+	return 0;
 }
